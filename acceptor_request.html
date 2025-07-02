@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>HelpHub - Acceptor</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    body {
+      background: linear-gradient(135deg, #fefefe, #ffeef1);
+      color: #333;
+    }
+
+    .navbar {
+      background: #D37676;
+      padding: 1rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      color: white;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+
+    .navbar .logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: linear-gradient(145deg, #f9c5d1, #d37676);
+      padding: 6px 12px;
+      border-radius: 40px;
+      box-shadow: 2px 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    .navbar .logo img {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid white;
+    }
+
+    .navbar .logo span {
+      font-size: 1.3rem;
+      font-weight: bold;
+    }
+
+    .navbar ul {
+      list-style: none;
+      display: flex;
+      gap: 2rem;
+    }
+
+    .navbar ul li a {
+      text-decoration: none;
+      color: white;
+      font-size: 1rem;
+    }
+
+    .container {
+      max-width: 700px;
+      margin: 30px auto;
+      background: #fff;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 0 25px rgba(0,0,0,0.1);
+    }
+
+    h2 {
+      text-align: center;
+      color: #d00000;
+      margin-bottom: 20px;
+    }
+
+    label {
+      font-weight: bold;
+      margin-top: 1rem;
+      display: block;
+    }
+
+    input[type="text"], input[type="tel"] {
+      width: 100%;
+      padding: 0.7rem;
+      margin-top: 0.5rem;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+    }
+
+    .gps-btn {
+      width: 100%;
+      background: #ef233c;
+      color: white;
+      padding: 0.7rem;
+      margin-top: 0.5rem;
+      border: none;
+      border-radius: 6px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .gps-btn:hover {
+      background: #c53030;
+    }
+
+    .checkbox-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 12px;
+      margin-top: 1rem;
+    }
+
+    .checkbox-grid label {
+      background: #ffe0e0;
+      padding: 10px;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    #otherText {
+      display: none;
+      margin-top: 10px;
+    }
+
+    .submit-btn {
+      margin-top: 2rem;
+      padding: 0.75rem;
+      background: #e63946;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+      width: 100%;
+    }
+	.success-message {
+	  background-color: #d4edda;
+	  color: #155724;
+	  padding: 10px;
+	  border-radius: 6px;
+	  margin-top: 20px;
+	}
+
+	.error-message {
+	  background-color: #f8d7da;
+	  color: #721c24;
+	  padding: 10px;
+	  border-radius: 6px;
+	  margin-top: 20px;
+	}
+	#successMessage, #errorMessage {
+	  display: none;
+	}
+
+
+
+    .submit-btn:hover {
+      background: #c53030;
+    }
+  </style>
+</head>
+<body>
+  <nav class="navbar">
+    <div class="logo">
+      <img src="images/logo.png" alt="HelpHub Logo" />
+      <span>HelpHub</span>
+    </div>
+    <ul>
+      <li><a href="home.html">🏠 Home</a></li>
+	  <li><a href="select-role.html"> Back</a></li>
+      <li><a href="about.html">ℹ About</a></li>
+    </ul>
+  </nav>
+
+  <div class="container">
+    <h2>Acceptor Form</h2>
+    <form id="acceptorForm">
+      <label for="name">Name:</label>
+      <input type="text" id="name" name="name" required />
+       <label for="phone">Phone:</label>
+        <input type="tel" id="phone" name="phone" required>
+
+      <label for="location">Location:</label>
+      <input type="text" id="location" name="location" placeholder="Enter your location or use GPS" />
+      <button type="button" class="gps-btn" onclick="getLocation()">📍 Use My Location</button>
+
+      <label>Categories Needed:</label>
+      <div class="checkbox-scroll">
+        <label><input type="checkbox" name="category" value="Clothing"> Clothing</label>
+        <label><input type="checkbox" name="category" value="Food"> Food</label>
+        <label><input type="checkbox" name="category" value="Books"> Books</label>
+        <label><input type="checkbox" name="category" value="Money"> Money</label>
+        <label><input type="checkbox" name="category" value="Accessories"> Accessories</label>
+        <label><input type="checkbox" name="category" value="Cooking Needs"> Cooking Needs</label>
+        <label><input type="checkbox" name="category" value="Electronic Gadgets"> Electronic Gadgets</label>
+		<label>
+		    <input type="checkbox" id="otherCheckbox" name="category" value="other"> Other
+			<input type="text" id="otherText" placeholder="Please specify" style="display: none; margin-top: 8px;"/>
+		  </label>
+		  
+	  </div>
+	  <button type="submit" class="submit-btn">Send Request to Donors</button>
+	  <div class="success-message" id="successMessage"></div>
+	  	    <div class="error-message" id="errorMessage"></div>
+    </form>
+  </div>
+	
+  <script>
+    document.getElementById("acceptorForm").addEventListener("submit", async function (e) {
+      e.preventDefault();
+
+      const name = document.getElementById("name").value;
+      const phone = document.getElementById("phone").value;
+      const location = document.getElementById("location").value;
+
+	  const selectedCategories = Array.from(document.querySelectorAll("input[name='category']:checked"))
+	          .map(cb => cb.value)
+	          .filter(val => val !== "other");
+
+	        if (document.getElementById("otherCheckbox").checked) {
+	          const other = document.getElementById("otherText").value.trim();
+	          if (other) selectedCategories.push(other);
+	        }
+
+      const requestBody = {
+        name: name,
+        phone: phone,
+        location: location,
+        categories: selectedCategories.join(", ")
+      };
+
+      const successMsg = document.getElementById("successMessage");
+      const errorMsg = document.getElementById("errorMessage");
+
+      successMsg.style.display = 'none';
+      errorMsg.style.display = 'none';
+
+      try {
+        const response = await fetch("http://localhost:8082/api/acceptor/request", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(requestBody),
+        });
+
+        if (response.ok) {
+          const result = await response.json();
+          successMsg.innerHTML = `✅ Request submitted successfully! Your ID	 is ${result.id} `;
+          successMsg.style.display = 'block';
+          document.getElementById("acceptorForm").reset();
+        } else {
+          const error = await response.json();
+          errorMsg.innerHTML ='❌ Error: ${error.message}';
+          errorMsg.style.display = 'block';
+        }
+      } catch (error) {
+        console.error("Error submitting request:", error);
+        errorMsg.innerHTML = "❌ An error occurred while submitting the request.";
+        errorMsg.style.display = 'block';
+      }
+    });
+  </script>
+
+
+ 
+</body>
+</html>

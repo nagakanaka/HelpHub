@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Update Request - HelpHub</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    body {
+      background: linear-gradient(135deg, #fefefe, #ffeef1);
+      color: #333;
+    }
+
+    .navbar {
+      background: #D37676;
+      padding: 1rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      color: white;
+    }
+
+    .navbar .logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: linear-gradient(145deg, #f9c5d1, #d37676);
+      padding: 6px 12px;
+      border-radius: 40px;
+    }
+
+    .navbar .logo img {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid white;
+    }
+
+    .navbar .logo span {
+      font-size: 1.3rem;
+      font-weight: bold;
+    }
+
+    .navbar ul {
+      list-style: none;
+      display: flex;
+      gap: 2rem;
+    }
+
+    .navbar ul li a {
+      text-decoration: none;
+      color: white;
+      font-size: 1rem;
+    }
+
+    .container {
+      max-width: 700px;
+      margin: 30px auto;
+      background: #fff;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 0 25px rgba(0,0,0,0.1);
+    }
+
+    h2 {
+      text-align: center;
+      color: #d00000;
+      margin-bottom: 20px;
+    }
+
+    label {
+      font-weight: bold;
+      margin-top: 1rem;
+      display: block;
+    }
+
+    input[type="text"], input[type="tel"] {
+      width: 100%;
+      padding: 0.7rem;
+      margin-top: 0.5rem;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+    }
+
+    .checkbox-group {
+      margin-top: 1rem;
+    }
+
+    .checkbox-group label {
+      display: block;
+      margin-top: 0.5rem;
+    }
+
+    #otherText {
+      display: none;
+      margin-top: 8px;
+    }
+
+    .submit-btn {
+      margin-top: 2rem;
+      padding: 0.75rem;
+      background: #e63946;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+      width: 100%;
+    }
+
+    .submit-btn:hover {
+      background: #c53030;
+    }
+
+    .success-message, .error-message {
+      display: none;
+      padding: 10px;
+      border-radius: 6px;
+      margin-top: 20px;
+    }
+
+    .success-message {
+      background-color: #d4edda;
+      color: #155724;
+    }
+
+    .error-message {
+      background-color: #f8d7da;
+      color: #721c24;
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="navbar">
+    <div class="logo">
+      <img src="images/logo.png" alt="HelpHub Logo" />
+      <span>HelpHub</span>
+    </div>
+    <ul>
+      <li><a href="home.html">🏠 Home</a></li>
+      <li><a href="acceptor.html">Back</a></li>
+      <li><a href="about.html">ℹ️ About</a></li>
+    </ul>
+  </nav>
+
+  <div class="container">
+    <h2>Update Your Request</h2>
+    <form id="updateForm">
+      <label for="requestId">Request ID</label>
+      <input type="text" id="requestId" required />
+
+      <label for="name">Full Name</label>
+      <input type="text" id="name" required />
+
+      <label for="phone">Phone Number</label>
+      <input type="tel" id="phone" required />
+
+      <label for="location">Location</label>
+      <input type="text" id="location" required />
+
+      <label>Update Categories</label>
+      <div class="checkbox-group">
+        <label><input type="checkbox" name="category" value="Clothing" /> Clothing</label>
+        <label><input type="checkbox" name="category" value="Food" /> Food</label>
+        <label><input type="checkbox" name="category" value="Books" /> Books</label>
+        <label><input type="checkbox" name="category" value="Medical" /> Medical</label>
+        <label><input type="checkbox" name="category" value="Accessories" /> Accessories</label>
+        <label><input type="checkbox" name="category" value="Money" /> Money</label>
+        <label><input type="checkbox" name="category" value="Cooking Needs" /> Cooking Needs</label>
+        <label><input type="checkbox" name="category" value="Electronic Gadgets" /> Electronic Gadgets</label>
+        <label>
+          <input type="checkbox" id="otherCheckbox" value="Other" />
+          Other
+        </label>
+        <input type="text" id="otherText" placeholder="Please specify" />
+      </div>
+
+      <button type="submit" class="submit-btn">Update Request</button>
+      <div class="success-message" id="updateSuccess"></div>
+      <div class="error-message" id="updateError"></div>
+    </form>
+  </div>
+
+  <script>
+    document.getElementById("otherCheckbox").addEventListener("change", function () {
+      document.getElementById("otherText").style.display = this.checked ? "block" : "none";
+    });
+
+    document.getElementById("updateForm").addEventListener("submit", async function (e) {
+      e.preventDefault();
+
+      const requestId = document.getElementById("requestId").value;
+      const name = document.getElementById("name").value;
+      const phone = document.getElementById("phone").value;
+      const location = document.getElementById("location").value;
+
+      const selectedCategories = Array.from(document.querySelectorAll("input[name='category']:checked"))
+        .map(cb => cb.value)
+        .filter(val => val !== "Other");
+
+      if (document.getElementById("otherCheckbox").checked) {
+        const other = document.getElementById("otherText").value.trim();
+        if (other) selectedCategories.push(other);
+      }
+
+      const data = {
+        name: name,
+        phone: phone,
+        location: location,
+        categories: selectedCategories.join(", ")
+      };
+
+      try {
+        const response = await fetch(`http://localhost:8082/api/acceptor/update/${requestId}`, {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(data)
+        });
+
+        const result = await response.json();
+
+        if (response.ok) {
+          document.getElementById("updateSuccess").innerText = "✅ Request updated successfully!";
+          document.getElementById("updateSuccess").style.display = "block";
+          document.getElementById("updateError").style.display = "none";
+        } else {
+          document.getElementById("updateError").innerText = "❌ Failed to update: " + result.message;
+          document.getElementById("updateError").style.display = "block";
+          document.getElementById("updateSuccess").style.display = "none";
+        }
+      } catch (err) {
+        document.getElementById("updateError").innerText = "❌ Error: " + err.message;
+        document.getElementById("updateError").style.display = "block";
+        document.getElementById("updateSuccess").style.display = "none";
+      }
+    });
+  </script>
+</body>
+</html>

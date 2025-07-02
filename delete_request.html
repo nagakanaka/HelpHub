@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Delete Request - HelpHub</title>
+  <style>
+        * {
+          margin: 0;
+          padding: 0;
+          box-sizing: border-box;
+          font-family: 'Segoe UI', sans-serif;
+        }
+
+        body {
+          background: linear-gradient(135deg, #fefefe, #ffeef1);
+          color: #333;
+        }
+
+        .navbar {
+          background: #D37676;
+          padding: 1rem 2rem;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          color: white;
+          box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        .navbar .logo {
+          display: flex;
+          align-items: center;
+          gap: 12px;
+          background: linear-gradient(145deg, #f9c5d1, #d37676);
+          padding: 6px 12px;
+          border-radius: 40px;
+          box-shadow: 2px 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .navbar .logo img {
+          width: 32px;
+          height: 32px;
+          border-radius: 50%;
+          object-fit: cover;
+          border: 2px solid white;
+        }
+
+        .navbar .logo span {
+          font-size: 1.3rem;
+          font-weight: bold;
+        }
+
+        .navbar ul {
+          list-style: none;
+          display: flex;
+          gap: 2rem;
+        }
+
+        .navbar ul li a {
+          text-decoration: none;
+          color: white;
+          font-size: 1rem;
+        }
+
+        .container {
+          max-width: 700px;
+          margin: 30px auto;
+          background: #fff;
+          padding: 30px;
+          border-radius: 15px;
+          box-shadow: 0 0 25px rgba(0,0,0,0.1);
+        }
+
+        h2 {
+          text-align: center;
+          color: #d00000;
+          margin-bottom: 20px;
+        }
+
+        label {
+          font-weight: bold;
+          margin-top: 1rem;
+          display: block;
+        }
+
+        input[type="text"], input[type="tel"] {
+          width: 100%;
+          padding: 0.7rem;
+          margin-top: 0.5rem;
+          border: 1px solid #ccc;
+          border-radius: 6px;
+        }
+
+        .gps-btn {
+          width: 100%;
+          background: #ef233c;
+          color: white;
+          padding: 0.7rem;
+          margin-top: 0.5rem;
+          border: none;
+          border-radius: 6px;
+          font-weight: bold;
+          cursor: pointer;
+        }
+
+        .gps-btn:hover {
+          background: #c53030;
+        }
+
+        .checkbox-grid {
+          display: grid;
+          grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+          gap: 12px;
+          margin-top: 1rem;
+        }
+
+        .checkbox-grid label {
+          background: #ffe0e0;
+          padding: 10px;
+          border-radius: 6px;
+          display: flex;
+          align-items: center;
+          gap: 8px;
+        }
+
+        #otherText {
+          display: none;
+          margin-top: 10px;
+        }
+
+        .submit-btn {
+          margin-top: 2rem;
+          padding: 0.75rem;
+          background: #e63946;
+          color: white;
+          border: none;
+          border-radius: 8px;
+          cursor: pointer;
+          font-weight: bold;
+          width: 100%;
+        }
+    	.success-message {
+    	  background-color: #d4edda;
+    	  color: #155724;
+    	  padding: 10px;
+    	  border-radius: 6px;
+    	  margin-top: 20px;
+    	}
+
+    	.error-message {
+    	  background-color: rgb(255, 0, 0);
+    	  color: #721c24;
+    	  padding: 10px;
+    	  border-radius: 6px;
+    	  margin-top: 20px;
+    	}
+		.success-message, .error-message {
+		  display: none;
+		}
+
+
+        .submit-btn:hover {
+          background: #c53030;
+        }
+      </style>
+</head>
+<body>
+	<nav class="navbar">
+	    <div class="logo">
+	      <img src="images/logo.png" alt="HelpHub Logo" />
+	      <span>HelpHub</span>
+	    </div>
+	    <ul>
+	      <li><a href="home.html">🏠 Home</a></li>
+	      <li><a href="acceptor.html">Back</a></li>
+	      <li><a href="about.html">ℹ️ About</a></li>
+	    </ul>
+	  </nav>
+  <div class="container">
+    <h1>Delete Request</h1>
+    <form id="deleteForm">
+      <label for="requestId">Request ID</label>
+      <input type="text" id="requestId" required />
+	  <button type="submit" class="submit-btn">Delete</button>
+
+      <div class="success-message" id="deleteSuccess"></div>
+      <div class="error-message" id="deleteError"></div>
+    </form>
+  </div>
+  <script>
+    document.getElementById("deleteForm").addEventListener("submit", async function(e) {
+      e.preventDefault();
+
+      const requestId = document.getElementById("requestId").value;
+
+      try {
+        const res = await fetch(`http://localhost:8082/api/acceptor/delete/${requestId}`, {
+          method: "DELETE"
+        });
+
+        const result = await res.text();
+
+        if (res.ok) {
+          document.getElementById("deleteSuccess").innerText = result || "✅ Request deleted successfully.";
+          document.getElementById("deleteSuccess").style.display = "block";
+          document.getElementById("deleteError").style.display = "none";
+        } else {
+          document.getElementById("deleteError").innerText = result || "❌ Failed to delete request.";
+          document.getElementById("deleteError").style.display = "block";
+          document.getElementById("deleteSuccess").style.display = "none";
+        }
+      } catch (err) {
+        document.getElementById("deleteError").innerText = "❌ Error: " + err.message;
+        document.getElementById("deleteError").style.display = "block";
+        document.getElementById("deleteSuccess").style.display = "none";
+      }
+    });
+  </script>
+
+</body>
+</html>

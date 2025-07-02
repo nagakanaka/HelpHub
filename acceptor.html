@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>HelpHub - Acceptor Dashboard</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    body {
+      background: linear-gradient(135deg, #fff0f0, #ffe0ec);
+      color: #5a0000;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .navbar {
+      background: #FF6868;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: white;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+
+    .navbar .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 1.5rem;
+      font-weight: bold;
+    }
+
+    .navbar .logo img {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+    }
+
+    .nav-links {
+      list-style: none;
+      display: flex;
+      gap: 1.5rem;
+    }
+
+    .nav-links a {
+      color: white;
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.3s;
+    }
+
+    .nav-links a:hover {
+      color: #ffdada;
+    }
+
+    .dashboard-container {
+      flex: 1;
+      max-width: 600px;
+      margin: 40px auto;
+      background: #fff;
+      padding: 3rem 2rem;
+      border-radius: 20px;
+      box-shadow: 0 12px 25px rgba(0,0,0,0.1);
+      text-align: center;
+      animation: fadeIn 1s ease;
+    }
+
+    .dashboard-container h1 {
+      font-size: 2.2rem;
+      margin-bottom: 30px;
+      color: #FF6868;
+      text-shadow: 1px 1px 2px #f7b2c4;
+    }
+
+    .btn-group {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      align-items: center;
+    }
+
+    .btn {
+      padding: 14px 24px;
+      background: linear-gradient(145deg, #FF6868, #d63456);
+      color: white;
+      border: none;
+      border-radius: 50px;
+      font-size: 1.1rem;
+      width: 100%;
+      max-width: 400px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      box-shadow: 0 6px 18px rgba(255, 104, 104, 0.3);
+    }
+
+    .btn:hover {
+      transform: translateY(-2px) scale(1.02);
+      background: linear-gradient(145deg, #d63456, #FF6868);
+      box-shadow: 0 8px 24px rgba(255, 104, 104, 0.5);
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body >
+
+  <!-- Navbar -->
+  <div class="navbar">
+    <div class="logo">
+      <img src="images/logo.png" alt="HelpHub Logo" />
+      <span>HelpHub</span>
+    </div>
+    <div class="nav-links">
+      <a href="home.html">🏠 Home</a>
+      <a href="signup.html">📝 Signup</a>
+      <a href="login.html">🔑 Login</a>
+      <a href="about.html">ℹ About</a>
+    </div>
+  </div>
+
+  <!-- Dashboard Content -->
+  <div align="center" >
+    <h1 align="center">Welcome to Acceptor Dashboard</h1>
+    <div class="btn-group">
+      <a href="acceptor_request.html" class="btn">➕ Create Request</a>
+      <a href="update_request.html" class="btn">✏ Update Request</a>
+      <a href="delete_request.html" class="btn">🗑 Delete Request</a>
+      <a href="view_requests.html" class="btn">📋 View All Requests</a>
+    </div>
+  </div>
+  
+</body>
+</html>
